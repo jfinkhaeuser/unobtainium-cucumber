@@ -75,7 +75,8 @@ at_exit do
   if not $reset_called == 2
     warn '*' * 80
     warn "* If this fails, check the steps in 'driver_reset.feature'!"
-    warn "* We expected reset to be called twice, but it got called #{$reset_called} times!"
+    warn "* We expected reset to be called twice, but it got called "\
+      "#{$reset_called} times!"
     warn '*' * 80
     Kernel.exit(3)
   end
