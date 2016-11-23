@@ -7,14 +7,17 @@
 # contributors. All rights reserved.
 #
 
+# rubocop:disable Style/GlobalVars
 $reset_called = 0
 
 Given(/^I remove any reset functions$/) do
   driver.class.class_eval do
+    # rubocop:disable Lint/HandleExceptions
     begin
       remove_method :reset
     rescue NameError
     end
+    # rubocop:enable Lint/HandleExceptions
   end
 end
 
@@ -26,11 +29,13 @@ Given(/^I run a scenario to test driver reset$/) do
   driver.class.class_eval do
     def reset(*args)
       $reset_called += 1
+      # rubocop:disable Lint/HandleExceptions
       begin
         super(*args)
       rescue NoMethodError
         # Work around drivers not supporting reset
       end
+      # rubocop:enable Lint/HandleExceptions
     end
   end
 end
@@ -58,3 +63,5 @@ at_exit do
     Kernel.exit(3)
   end
 end
+
+# rubocop:enable Style/GlobalVars
