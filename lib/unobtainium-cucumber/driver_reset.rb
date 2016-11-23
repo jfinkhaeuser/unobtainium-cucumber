@@ -12,6 +12,14 @@ After do |_|
     next
   end
 
+  # Covering this would require two separate test suites. I'm not sure I'm
+  # ready for that.
+  # :nocov:
+  if config['cucumber.driver_reset'] == false
+    next
+  end
+  # :nocov:
+
   begin
     driver.reset
   rescue => error
