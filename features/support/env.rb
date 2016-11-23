@@ -22,4 +22,4 @@ module MyExtensions
   end
 end # module MyExtensions
 
-# World(MyExtensions)
+World(MyExtensions)
