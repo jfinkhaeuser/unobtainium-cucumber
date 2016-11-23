@@ -8,3 +8,9 @@
 #
 
 driver: headless
+
+# The following configuration options may be used to change the behaviour of
+# the test suite.
+#
+# cucumber:
+#   driver_reset: false
