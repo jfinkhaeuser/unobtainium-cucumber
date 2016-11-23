@@ -72,10 +72,10 @@ at_exit do
   # We expect reset to be called exactly twice, for the driver that defines
   # such a function. But see the scenario for switching off driver reset
   # above.
-  if not $reset_called == 2
+  if not $reset_called > 2
     warn '*' * 80
     warn "* If this fails, check the steps in 'driver_reset.feature'!"
-    warn "* We expected reset to be called twice, but it got called "\
+    warn "* We expected reset to be twice or more, but it got called "\
       "#{$reset_called} times!"
     warn '*' * 80
     Kernel.exit(3)
