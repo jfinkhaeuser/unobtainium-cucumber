@@ -8,4 +8,4 @@ script:
   - bundle exec codeclimate-test-reporter
 addons:
   code_climate:
-    repo_token: FIXME
+    repo_token: 2341a8db591ce8112bd9a012ff0e3cfa20dce5705e69e3a89fda6829caf4f7fd
