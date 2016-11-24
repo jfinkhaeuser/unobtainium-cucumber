@@ -15,3 +15,6 @@ require 'unobtainium-cucumber/version'
 World(Unobtainium::World)
 
 require 'unobtainium-cucumber/driver_reset.rb'
+require 'unobtainium-cucumber/status_actions.rb'
+
+World(Unobtainium::Cucumber::StatusActions)
