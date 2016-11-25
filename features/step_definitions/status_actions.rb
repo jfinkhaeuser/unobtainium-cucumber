@@ -9,27 +9,31 @@
 
 # rubocop:disable Style/GlobalVars
 
-def dummy_action(*args)
+def dummy_action(*_)
 end
 
-def global_action(*args)
+def global_action(*_)
 end
 
 $counter = 0
-def counting_action(*args)
+def counting_action(*_)
   $counter += 1
 end
 
-def recording_action(world, scenario)
+def recording_action(_, scenario)
   scenario.called = true
 end
 
+# TestModule
 module TestModule
   def self.inner_recorder(*args)
     recording_action(*args)
   end
 end
 
+# StatusActionsTester doubles both as a test target for the actions, a
+# state crossing multiple step definitions, and behaving a bit like
+# a scenario.
 class StatusActionsTester
   # Include StatusActions functionality...
   include ::Unobtainium::Cucumber::StatusActions
@@ -44,13 +48,8 @@ class StatusActionsTester
   end
 
   # Also, add setters for the above.
-  def passed=(value)
-    @passed = value
-  end
-
-  def outline=(value)
-    @outline = value
-  end
+  attr_writer :passed
+  attr_writer :outline
 
   # Accessors for various test states
   attr_accessor :register_status
@@ -78,7 +77,9 @@ Given(/^the scenario is( not)? an outline$/) do |negation|
   @status_actions.outline = negation.nil? ? true : false
 end
 
-Then(/^I expect the output to contain :(passed\?|failed\?) and :(scenario|outline)$/) do |status, type|
+Then(
+  /^I expect the output to contain :(passed\?|failed\?) and :(scenario|outline)$/
+) do |status, type|
   # Since the status action instance behaves as a scenario from the previous
   # steps, we can pass it to the action_key method.
   result = @status_actions.action_key(@status_actions)
@@ -120,7 +121,6 @@ Then(/^I expect the function to (.+)$/) do |result|
   type_sym = @status_actions.register_type.to_sym
   action_func = @status_actions.register_functions[0]
   action_block = @status_actions.register_functions[1]
-
 
   begin
     @status_actions.register_action(status_sym, action_func, type: type_sym,
@@ -195,7 +195,7 @@ end
 Then(/^I expect there to be no registered actions$/) do
   # The default type is :scenario
   registered = @status_actions.registered_actions(:passed?, :scenario)
-  if registered.length != 0
+  if not registered.empty?
     raise "Expected zero registered actions, but found: #{registered.lenght}"
   end
 end
@@ -271,7 +271,7 @@ Then(/^I expect this to succeed$/) do
 end
 
 Given(/^I execute a block action$/) do
-  action = proc do |world, scenario|
+  action = proc do |_, scenario|
     scenario.called = true
   end
 
@@ -291,44 +291,54 @@ end
 
 Given(/^I execute a namespaced string action$/) do
   @status_actions.called = false
-  @status_actions.execute_action(self, '::TestModule::inner_recorder', @status_actions)
+  @status_actions.execute_action(self, '::TestModule::inner_recorder',
+                                 @status_actions)
 end
 
 Given(/^I execute a namespaced string action that is dot\-separated$/) do
   @status_actions.called = false
-  @status_actions.execute_action(self, '::TestModule.inner_recorder', @status_actions)
+  @status_actions.execute_action(self, '::TestModule.inner_recorder',
+                                 @status_actions)
 end
 
 Given(/^I execute string action that does not resolve$/) do
   @status_actions.called = false
+  # rubocop:disable Lint/HandleExceptions
   begin
     @status_actions.execute_action(self, 'does not resolve', @status_actions)
   rescue => _err
   end
+  # rubocop:enable Lint/HandleExceptions
 end
 
 Given(/^I execute symbol action that does not resolve$/) do
   @status_actions.called = false
+  # rubocop:disable Lint/HandleExceptions
   begin
     @status_actions.execute_action(self, :does_not_resolve, @status_actions)
   rescue => _err
   end
+  # rubocop:enable Lint/HandleExceptions
 end
 
 Given(/^I execute string action with two dots$/) do
   @status_actions.called = false
+  # rubocop:disable Lint/HandleExceptions
   begin
     @status_actions.execute_action(self, 'can.not.resolve', @status_actions)
   rescue => _err
   end
+  # rubocop:enable Lint/HandleExceptions
 end
 
 Given(/^I execute a number action$/) do
   @status_actions.called = false
+  # rubocop:disable Lint/HandleExceptions
   begin
     @status_actions.execute_action(self, 42, @status_actions)
   rescue => _err
   end
+  # rubocop:enable Lint/HandleExceptions
 end
 
 Then(/^I expect this to fail$/) do
