@@ -86,7 +86,9 @@ module Unobtainium
         [:passed?, :failed?].each do |status|
           for_status = to_register[status]
           if for_status.nil?
+            # :nocov:
             next
+            # :nocov:
           end
 
           # If the entry for the status is an Array, it applies to scenarios
@@ -100,9 +102,11 @@ module Unobtainium
             actions[:scenario] = for_status[:scenario] || []
             actions[:outline] = for_status[:outline] || []
           else
+            # :nocov:
             raise "Cannot interpret status action configuration for status "\
               "#{status}; it should be an Array or Hash, but instead it was"\
               " this: #{for_status}"
+            # :nocov:
           end
 
           # Now we have actions for the statuses, we can register them.
@@ -126,13 +130,13 @@ module Unobtainium
         # Symbols are almost as easy to handle: they must resolve to a
         # method, either globally or on the world object.
         if action.is_a? Symbol
-          meth = method(action) || world.method(action)
+          meth = resolve_action(Object, world, action)
           if meth.nil?
             raise NoMethodError, "Symbol :#{action} could not be resolved "\
               "either globally or as part of the cucumber World object, "\
               "aborting!"
           end
-          return meth.call(world, action)
+          return meth.call(world, scenario)
         end
 
         # At this point, the action better be a String.
@@ -145,6 +149,21 @@ module Unobtainium
         # to query a particular module for the method.
         split_action = action.split(/::/)
         method_name = split_action.pop
+
+        # If the method name contains a dot, it uses 'Module.method' notation.
+        split_method = method_name.split(/\./)
+        case split_method.length
+        when 1
+          # Do nothing; the method name did not contain a dot
+        when 2
+          # We have a method name and a module part
+          split_action << split_method[0]
+          method_name = split_method[1]
+        else
+          raise "Too many dots in method name: #{method_name}"
+        end
+
+        # Re-join the module name
         module_name = split_action.join('::')
 
         # If we have no discernable module, use Object instead.
@@ -155,17 +174,7 @@ module Unobtainium
 
         # Try the module we found (i.e. possibly Object) and world for
         # resolving the method name.
-        method_sym = method_name.to_sym
-        meth = nil
-        [the_module, world].each do |receiver|
-          begin
-            meth = receiver.method(method_sym)
-            break
-          rescue NameError
-            next
-          end
-        end
-
+        meth = resolve_action(the_module, world, method_name)
         if meth.nil?
           raise NoMethodError, "Action '#{action}' could not be resolved!"
         end
@@ -194,6 +203,22 @@ module Unobtainium
           ::Unobtainium::Runtime.instance.delete(
             ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
         end
+      end
+
+      ##
+      # Resolves the given symbol in either of the given namespace or the
+      # world object. Returns nil if neither contained the symbol.
+      def resolve_action(namespace, world, method_name)
+        method_sym = method_name.to_sym
+        meth = nil
+        [namespace, world].each do |receiver|
+          begin
+            return receiver.method(method_sym)
+          rescue NameError
+            next
+          end
+        end
+        return nil
       end
     end # module StatusActions
   end # module Cucumber

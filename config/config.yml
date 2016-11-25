@@ -9,8 +9,20 @@
 
 driver: headless
 
+cucumber:
+
 # The following configuration options may be used to change the behaviour of
 # the test suite.
 #
-# cucumber:
 #   driver_reset: false
+
+# The following options are expected by the test suite. Changing them may
+# make the test suite fail. Proceed with caution!
+  status_actions:
+    passed?:
+      - global_action
+    failed?:
+      outline:
+        - dummy_action
+      scenario:
+        - method_from_own_extension
