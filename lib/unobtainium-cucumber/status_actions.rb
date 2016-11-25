@@ -174,6 +174,19 @@ module Unobtainium
       end
 
       ##
+      # For a given status and type, return the registered actions.
+      def registered_actions(status, type)
+        if not ::Unobtainium::Runtime.instance.has?(
+            ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
+          return []
+        end
+
+        actions = ::Unobtainium::Runtime.instance.fetch(
+          ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
+        return actions[[status, type]] || []
+      end
+
+      ##
       # Partially for testing purposes, clears the action registry.
       def clear_actions
         if ::Unobtainium::Runtime.instance.has?(
