@@ -9,8 +9,13 @@
 
 module Unobtainium
   module Cucumber
+    ##
+    # The StatusActions module contains all functionality for registering
+    # actions to be run when a scenario or outline ended with a particular
+    # status.
     module StatusActions
-      RUNTIME_KEY = 'unobtainium-cucumber-status-actions'
+      # Key for storing actions in unobtainium's runtime instance.
+      RUNTIME_KEY = 'unobtainium-cucumber-status-actions'.freeze
 
       ##
       # Register a action for a :passed? or :failed? scenario.
@@ -145,26 +150,8 @@ module Unobtainium
             "Aborting!"
         end
 
-        # Try to see whether we have a fully qualified name that requires us
-        # to query a particular module for the method.
-        split_action = action.split(/::/)
-        method_name = split_action.pop
-
-        # If the method name contains a dot, it uses 'Module.method' notation.
-        split_method = method_name.split(/\./)
-        case split_method.length
-        when 1
-          # Do nothing; the method name did not contain a dot
-        when 2
-          # We have a method name and a module part
-          split_action << split_method[0]
-          method_name = split_method[1]
-        else
-          raise "Too many dots in method name: #{method_name}"
-        end
-
-        # Re-join the module name
-        module_name = split_action.join('::')
+        # Split module and method name
+        module_name, method_name = split_string_action(action)
 
         # If we have no discernable module, use Object instead.
         the_module = Object
@@ -185,24 +172,22 @@ module Unobtainium
       ##
       # For a given status and type, return the registered actions.
       def registered_actions(status, type)
-        if not ::Unobtainium::Runtime.instance.has?(
-            ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
+        if not ::Unobtainium::Runtime.instance.has?(RUNTIME_KEY)
           return []
         end
 
-        actions = ::Unobtainium::Runtime.instance.fetch(
-          ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
+        actions = ::Unobtainium::Runtime.instance.fetch(RUNTIME_KEY)
         return actions[[status, type]] || []
       end
 
       ##
       # Partially for testing purposes, clears the action registry.
       def clear_actions
-        if ::Unobtainium::Runtime.instance.has?(
-            ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
-          ::Unobtainium::Runtime.instance.delete(
-            ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
+        if not ::Unobtainium::Runtime.instance.has?(RUNTIME_KEY)
+          return
         end
+
+        ::Unobtainium::Runtime.instance.delete(RUNTIME_KEY)
       end
 
       ##
@@ -210,7 +195,7 @@ module Unobtainium
       # world object. Returns nil if neither contained the symbol.
       def resolve_action(namespace, world, method_name)
         method_sym = method_name.to_sym
-        meth = nil
+
         [namespace, world].each do |receiver|
           begin
             return receiver.method(method_sym)
@@ -220,11 +205,42 @@ module Unobtainium
         end
         return nil
       end
+
+      ##
+      # Splits a string action into a module prefix and a method name
+      def split_string_action(action)
+        # Try to see whether we have a fully qualified name that requires us
+        # to query a particular module for the method.
+        split_action = action.split(/::/)
+        method_name = split_action.pop
+
+        # If the method name contains a dot, it uses 'Module.method' notation.
+        # rubocop:disable Lint/EmptyWhen
+        split_method = method_name.split(/\./)
+        case split_method.length
+        when 1
+          # Do nothing; the method name did not contain a dot
+        when 2
+          # We have a method name and a module part
+          split_action << split_method[0]
+          method_name = split_method[1]
+        else
+          raise "Too many dots in method name: #{method_name}"
+        end
+        # rubocop:enable Lint/EmptyWhen
+
+        # Re-join the module name
+        module_name = split_action.join('::')
+
+        return module_name, method_name
+      end
     end # module StatusActions
   end # module Cucumber
 end # module Unobtainium
 
-
+##
+# The After hook with cucumber defined here will register config actions
+# and execute all matching, registered actions.
 After do |scenario|
   # Register all configured actions.
   register_config_actions(self)
