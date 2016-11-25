@@ -184,7 +184,9 @@ module Unobtainium
       # Partially for testing purposes, clears the action registry.
       def clear_actions
         if not ::Unobtainium::Runtime.instance.has?(RUNTIME_KEY)
+          # :nocov:
           return
+          # :nocov:
         end
 
         ::Unobtainium::Runtime.instance.delete(RUNTIME_KEY)
