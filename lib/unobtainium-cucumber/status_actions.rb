@@ -204,17 +204,9 @@ After do |scenario|
   # Register all configured actions.
   register_config_actions(self)
 
-  # Fetch actions
-  if not ::Unobtainium::Runtime.instance.has?(
-      ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
-    next
-  end
-  actions = ::Unobtainium::Runtime.instance.fetch(
-      ::Unobtainium::Cucumber::StatusActions::RUNTIME_KEY)
-
   # Fetch actions applying to this scenario
   key = action_key(scenario)
-  applicable_actions = actions[key] || []
+  applicable_actions = registered_actions(key[0], key[1])
 
   # Execute all actions applying to this scenario
   applicable_actions.each do |action|
