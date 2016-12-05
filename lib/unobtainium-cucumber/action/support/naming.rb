@@ -9,6 +9,9 @@
 module Unobtainium
   module Cucumber
     module Action
+
+      ##
+      # Support functions for actions
       module Support
 
         ##

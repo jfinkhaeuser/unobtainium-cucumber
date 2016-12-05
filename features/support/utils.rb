@@ -7,7 +7,7 @@
 # contributors. All rights reserved.
 #
 
-TIMESTAMP_REGEX ||= /\d{4}_\d{2}_\d{2}T\d{2}_\d{2}_\d{2}Z/.freeze
+TIMESTAMP_REGEX ||= /\d{4}_\d{2}_\d{2}T\d{2}_\d{2}_\d{2}Z/
 
 ##
 # Given a file name, extrat and convert timestamps
@@ -42,5 +42,6 @@ def timeout_match_files(pattern, timeout = 5)
     end
   end
 
-  raise "No file matching '#{pattern}' with a timestamp in the last #{timeout} seconds was found!"
+  raise "No file matching '#{pattern}' with a timestamp in the last #{timeout} "\
+    "seconds was found!"
 end

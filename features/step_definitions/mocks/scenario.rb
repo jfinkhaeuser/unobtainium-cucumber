@@ -16,6 +16,3 @@ class MockScenario
 
   attr_reader :name
 end
-
-
-

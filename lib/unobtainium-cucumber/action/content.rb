@@ -11,6 +11,9 @@ require 'unobtainium-cucumber/action/support/naming'
 
 module Unobtainium
   module Cucumber
+
+    ##
+    # Namespace for built-in status actions
     module Action
 
       include Support

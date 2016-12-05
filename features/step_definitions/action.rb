@@ -24,8 +24,8 @@ Then(/^I expect there to be a matching screenshot file$/) do
 
   # So what we do instead is find files that match the end. If the start matches
   # the syntax of a timestamp string, we can convert it to a timestamp. Then we
-  # can find out if between said timestamp and right now only a few seconds elapsed.
-  # If we find one such file, the test succeeds.
+  # can find out if between said timestamp and right now only a few seconds
+  # elapsed. If we find one such file, the test succeeds.
   pattern = 'screenshots/*-screenshots.png'
   timeout_match_files(pattern)
 
@@ -57,4 +57,3 @@ Then(/^I expect there to be a matching content file$/) do
   # *After* all checks, remove matching files.
   FileUtils.rm(Dir.glob(pattern))
 end
-

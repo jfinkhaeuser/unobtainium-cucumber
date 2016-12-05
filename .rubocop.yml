@@ -73,3 +73,6 @@ Style/FileName:
 
 Style/SpaceAfterNot:
   Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
