@@ -8,6 +8,7 @@
 #
 
 require 'unobtainium-cucumber/action/screenshot'
+require 'unobtainium-cucumber/action/content'
 require_relative './mocks/scenario'
 
 Given(/^I take a screenshot$/) do
@@ -31,3 +32,29 @@ Then(/^I expect there to be a matching screenshot file$/) do
   # *After* all checks, remove matching files.
   FileUtils.rm(Dir.glob(pattern))
 end
+
+Given(/^I navigate to the best site in the world$/) do
+  driver.navigate.to 'http://finkhaeuser.de'
+end
+
+When(/^I capture the page content$/) do
+  # See the similar screnshot matching step for some details.
+  tester = Class.new { extend ::Unobtainium::Cucumber::Action }
+  tester.store_content(self, MockScenario.new('contents'))
+end
+
+Then(/^I expect there to be a matching content file$/) do
+  # See the similar screnshot matching step for some details.
+  pattern = 'content/*-contents.txt'
+  match_file = timeout_match_files(pattern)
+
+  # Check that some expected content exists.
+  match = File.open(match_file).grep(/<html/)
+  if match.empty?
+    raise "File content of '#{match_file}' does not seem to be valid HTML!"
+  end
+
+  # *After* all checks, remove matching files.
+  FileUtils.rm(Dir.glob(pattern))
+end
+
