@@ -23,3 +23,6 @@ module MyExtensions
 end # module MyExtensions
 
 World(MyExtensions)
+
+# Utility code for testing
+require_relative './utils'
