@@ -349,7 +349,7 @@ end
 
 at_exit do
   # We expect the counting_action to be called once.
-  if not $counter == 1
+  if not $counter >= 1
     warn '*' * 80
     warn "* If this fails, check the steps in 'status_actions.feature'!"
     warn '*' * 80
