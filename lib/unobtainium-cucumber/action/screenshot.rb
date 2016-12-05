@@ -16,20 +16,22 @@ module Unobtainium
     # Namespace for built-in status actions
     module Action
 
-      include Support
+      class << self
+        include Support
 
-      ##
-      # Status action function that takes a screenshot.
-      def store_screenshot(world, scenario)
-        # Make sure the screenshots directory exists.
-        basedir = File.join(Dir.pwd, 'screenshots')
-        FileUtils.mkdir_p(basedir)
+        ##
+        # Status action function that takes a screenshot.
+        def store_screenshot(world, scenario)
+          # Make sure the screenshots directory exists.
+          basedir = File.join(Dir.pwd, 'screenshots')
+          FileUtils.mkdir_p(basedir)
 
-        # Take screenshot.
-        filename = File.join(basedir, base_filename(scenario))
-        filename += '.png'
-        world.driver.save_screenshot(filename)
-      end
+          # Take screenshot.
+          filename = File.join(basedir, base_filename(scenario))
+          filename += '.png'
+          world.driver.save_screenshot(filename)
+        end
+      end # class << self
     end # module Action
   end # module Cucumber
 end # module Unobtainium

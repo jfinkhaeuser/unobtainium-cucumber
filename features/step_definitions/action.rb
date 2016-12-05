@@ -12,8 +12,9 @@ require 'unobtainium-cucumber/action/content'
 require_relative './mocks/scenario'
 
 Given(/^I take a screenshot$/) do
-  tester = Class.new { extend ::Unobtainium::Cucumber::Action }
-  tester.store_screenshot(self, MockScenario.new('screenshots'))
+  ::Unobtainium::Cucumber::Action.store_screenshot(
+      self, MockScenario.new('screenshots')
+  )
 end
 
 Then(/^I expect there to be a matching screenshot file$/) do
@@ -39,8 +40,9 @@ end
 
 When(/^I capture the page content$/) do
   # See the similar screnshot matching step for some details.
-  tester = Class.new { extend ::Unobtainium::Cucumber::Action }
-  tester.store_content(self, MockScenario.new('contents'))
+  ::Unobtainium::Cucumber::Action.store_content(
+      self, MockScenario.new('contents')
+  )
 end
 
 Then(/^I expect there to be a matching content file$/) do

@@ -16,23 +16,25 @@ module Unobtainium
     # Namespace for built-in status actions
     module Action
 
-      include Support
+      class << self
+        include Support
 
-      ##
-      # Status action function that stores the page content (main page only)
-      def store_content(world, scenario)
-        # Make sure the content directory exists.
-        basedir = File.join(Dir.pwd, 'content')
-        FileUtils.mkdir_p(basedir)
+        ##
+        # Status action function that stores the page content (main page only)
+        def store_content(world, scenario)
+          # Make sure the content directory exists.
+          basedir = File.join(Dir.pwd, 'content')
+          FileUtils.mkdir_p(basedir)
 
-        # Store content. Note that not all drivers may support this.
-        filename = File.join(basedir, base_filename(scenario))
-        filename += '.txt'
+          # Store content. Note that not all drivers may support this.
+          filename = File.join(basedir, base_filename(scenario))
+          filename += '.txt'
 
-        File.open(filename, 'w') do |file|
-          file.write(world.driver.page_source)
+          File.open(filename, 'w') do |file|
+            file.write(world.driver.page_source)
+          end
         end
-      end
+      end # class << self
     end # module Action
   end # module Cucumber
 end # module Unobtainium
