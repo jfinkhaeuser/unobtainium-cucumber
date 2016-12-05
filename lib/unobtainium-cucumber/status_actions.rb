@@ -20,6 +20,13 @@ module Unobtainium
       # Key for storing actions in unobtainium's runtime instance.
       RUNTIME_KEY = 'unobtainium-cucumber-status-actions'.freeze
 
+      # Default status actions
+      DEFAULTS = {
+        failed?: [
+          '::Unobtainium::Cucumber::Action.store_screenshot',
+        ]
+      }.freeze
+
       ##
       # Register a action for a :passed? or :failed? scenario.
       # The :type parameter may either be :scenario or :outline.
@@ -89,7 +96,7 @@ module Unobtainium
       # This is largely an internal function, run after the first scenario
       # and before status actions are executed.
       def register_config_actions(world)
-        to_register = world.config['cucumber.status_actions'] || {}
+        to_register = world.config['cucumber.status_actions'] || DEFAULTS
 
         [:passed?, :failed?].each do |status|
           for_status = to_register[status]
