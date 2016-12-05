@@ -8,18 +8,11 @@
 #
 
 require 'unobtainium-cucumber/action/support/naming.rb'
-
-class FakeScenario
-  def initialize(name)
-    @name = name
-  end
-
-  attr_reader :name
-end
+require_relative './mocks/scenario'
 
 Given(/^I have a scenario named (.+)$/) do |scenario|
   @action_support = {}
-  @action_support[:scenario] = FakeScenario.new(scenario)
+  @action_support[:scenario] = MockScenario.new(scenario)
 end
 
 Given(/^I provide a tag (.+)$/) do |tag|
