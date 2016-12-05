@@ -244,12 +244,16 @@ module Unobtainium
 end # module Unobtainium
 
 ##
-# The After hook with cucumber defined here will register config actions
-# and execute all matching, registered actions.
-After do |scenario|
+# In the Before hook, we register configured actions.
+Before do |_|
   # Register all configured actions.
   register_config_actions(self)
+end
 
+##
+# The After hook with cucumber defined here will execute all matching,
+# registered actions.
+After do |scenario|
   # Fetch actions applying to this scenario
   key = action_key(scenario)
   applicable_actions = registered_actions(key[0], key[1])
