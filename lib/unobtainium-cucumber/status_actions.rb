@@ -7,6 +7,9 @@
 # contributors. All rights reserved.
 #
 
+require 'unobtainium-cucumber/action/screenshot'
+require 'unobtainium-cucumber/action/content'
+
 module Unobtainium
   module Cucumber
     ##
