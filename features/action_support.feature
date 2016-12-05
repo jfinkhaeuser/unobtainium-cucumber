@@ -15,4 +15,3 @@ Feature:
       | name          | tag     | timestamp            | filename                               |
       | some scenario | NIL     | 2016-11-25T15:48:13Z | 2016_11_25T15_48_13Z-some_scenario     |
       | some \| pipe  | the_tag | 2016-11-25T15:48:13Z | 2016_11_25T15_48_13Z-the_tag-some_pipe |
-

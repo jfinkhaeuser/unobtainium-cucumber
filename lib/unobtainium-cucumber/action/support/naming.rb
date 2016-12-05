@@ -15,6 +15,9 @@ module Unobtainium
         # Given a cucumber scenario, this function returns a timestamped
         # base filename (without extension) that reflects parts of the scenario
         # name.
+        # Note that the optional tag is not related to cucumber tags. It's just
+        # a way to distinguish two filenames for the same scenario at the same
+        # timestamp.
         # We use '_' as a replacement for unrenderable characters, and
         # '-' as a separator between file name components.
         def base_filename(scenario, tag = nil, timestamp = nil)
