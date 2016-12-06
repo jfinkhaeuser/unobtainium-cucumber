@@ -46,7 +46,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "chromedriver-helper"
   spec.add_development_dependency "phantomjs"
 
-  spec.add_dependency "unobtainium", "~> 0.9"
+  spec.add_dependency "unobtainium", "~> 0.10"
   spec.add_dependency "cucumber", "~> 2.0"
 end
 # rubocop:enable Metrics/BlockLength
