@@ -18,8 +18,7 @@ require "unobtainium-cucumber"
 
 # Extensions used for testing
 module MyExtensions
-  def method_from_own_extension(*args, &block)
-  end
+  def method_from_own_extension(*args, &block); end
 end # module MyExtensions
 
 World(MyExtensions)

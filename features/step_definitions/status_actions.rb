@@ -9,11 +9,9 @@
 
 # rubocop:disable Style/GlobalVars
 
-def dummy_action(*_)
-end
+def dummy_action(*_); end
 
-def global_action(*_)
-end
+def global_action(*_); end
 
 $counter = 0
 def counting_action(*_)
