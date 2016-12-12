@@ -148,3 +148,25 @@ You might have to use fully qualified names.
 
 Custom actions have limited support facilities in the `Action::Support` module.
 Check it out if you write your own.
+
+### Cucumber Events
+
+Cucumber provides an event bus which lets you register handlers for [cucumber's
+own events](http://www.rubydoc.info/gems/cucumber/Cucumber/Events). While that
+is going to be very helpful for hooking into the flow of execution, this gem
+adds [octiron](https://github.com/jfinkhaeuser/octiron) for further event
+processing, by publishing all cucumber events on octiron's event bus.
+
+Require `unobtainium-cucumber` as before, but also require the event processing
+code:
+
+```ruby
+# env.rb
+require 'unobtainium-cucumber'
+require 'unobtainium-cucumber/octiron_events'
+
+World(Octiron::World)
+```
+
+You can now register transmogrifiers for any of the cucumber event classes,
+and use the power of octiron's event processing pipeline.
