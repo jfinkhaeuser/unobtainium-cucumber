@@ -15,13 +15,14 @@ end
 
 # Other requires after SimpleCov
 require "unobtainium-cucumber"
+require "unobtainium-cucumber/octiron_events"
 
 # Extensions used for testing
 module MyExtensions
   def method_from_own_extension(*args, &block); end
 end # module MyExtensions
 
-World(MyExtensions)
+World(MyExtensions, Octiron::World)
 
 # Utility code for testing
 require_relative './utils'
