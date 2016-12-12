@@ -7,6 +7,7 @@
 # contributors. All rights reserved.
 #
 
+# Test handler for Octiron events
 class OctironHandler
   def initialize
     @called = false
@@ -14,7 +15,7 @@ class OctironHandler
 
   attr_reader :called
 
-  def call(event, *args)
+  def call(_event, *_args)
     @called = true
   end
 end
