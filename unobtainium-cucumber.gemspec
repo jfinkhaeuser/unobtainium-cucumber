@@ -48,6 +48,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "unobtainium", "~> 0.10"
   spec.add_dependency "cucumber", "~> 2.0"
+  spec.add_dependency "octiron", "~> 0.1"
 end
 # rubocop:enable Metrics/BlockLength
 # rubocop:enable Style/SpaceAroundOperators
