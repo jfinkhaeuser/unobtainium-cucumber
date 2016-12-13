@@ -12,17 +12,15 @@ require 'cucumber'
 
 AfterConfiguration do |config|
   # Register handlers for all Cucumber events on cucumber's event bus.
-  CUKE_EVENTS ||= [
-    :after_test_case,
-    :after_test_step,
-    :before_test_case,
-    :before_test_step,
-    :finished_testing,
-    :step_match
-  ].freeze
-
-  CUKE_EVENTS.each do |event_name|
-    config.on_event(event_name) do |event|
+  # Not all classes in the namespace may be events - but it's better to try
+  # a few too many than to have to constantly update this file when Cucumber
+  # changes.
+  ::Cucumber::Events.constants.each do |const|
+    event_type = ::Cucumber::Events.const_get(const)
+    if not event_type.is_a? Class
+      next
+    end
+    config.on_event(event_type) do |event|
       ::Octiron::World.event_bus.publish(event)
     end
   end
