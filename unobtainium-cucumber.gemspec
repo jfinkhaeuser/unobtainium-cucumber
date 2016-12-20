@@ -34,14 +34,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = '>= 2.0'
+  spec.required_ruby_version = '>= 2.2'
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rubocop", "~> 0.46"
   spec.add_development_dependency "rake", "~> 11.2"
   spec.add_development_dependency "simplecov", "~> 0.12"
   spec.add_development_dependency "yard", "~> 0.9"
-  spec.add_development_dependency "appium_lib", RUBY_VERSION >= '2.2' ? ">= 9.1" : "< 9.1"
+  spec.add_development_dependency "appium_lib"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "chromedriver-helper"
   spec.add_development_dependency "phantomjs"
