@@ -10,6 +10,10 @@
 require 'unobtainium'
 require 'unobtainium-cucumber/version'
 
+# Require dependencies
+require 'unobtainium-multifind'
+require 'unobtainium-multiwait'
+
 # First things first: extend the World. Otherwise nothing in this file will
 # work.
 World(Unobtainium::World)
