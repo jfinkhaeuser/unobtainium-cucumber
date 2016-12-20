@@ -47,6 +47,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "phantomjs"
 
   spec.add_dependency "unobtainium", "~> 0.10"
+  spec.add_dependency "unobtainium-multifind", "~> 0.3"
+  spec.add_dependency "unobtainium-multiwait", "~> 0.2"
   spec.add_dependency "cucumber", "~> 2.0"
   spec.add_dependency "octiron", "~> 0.1"
 end
