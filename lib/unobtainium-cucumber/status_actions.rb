@@ -44,13 +44,13 @@ module Unobtainium
         end
 
         # Parameter checks!
-        if not [:passed?, :failed?].include?(status)
+        if not %i[passed? failed?].include?(status)
           raise "Status may be one of :passed? or :failed? only!"
         end
 
         options ||= {}
         type = options[:type] || :scenario
-        if not [:scenario, :outline].include?(type)
+        if not %i[scenario outline].include?(type)
           raise "The :type option may be one of :scenario or :outline only!"
         end
 
@@ -98,7 +98,7 @@ module Unobtainium
       def register_config_actions(world)
         to_register = world.config['cucumber.status_actions'] || DEFAULTS
 
-        [:passed?, :failed?].each do |status|
+        %i[passed? failed?].each do |status|
           for_status = to_register[status]
           if for_status.nil?
             # :nocov:
@@ -125,7 +125,7 @@ module Unobtainium
           end
 
           # Now we have actions for the statuses, we can register them.
-          [:scenario, :outline].each do |type|
+          %i[scenario outline].each do |type|
             actions[type].each do |action|
               register_action(status, action, type: type)
             end

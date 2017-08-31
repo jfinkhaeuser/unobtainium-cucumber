@@ -32,7 +32,7 @@ module Unobtainium
           base_name = [timestamp, tag, scenario_name].reject(&:nil?).join('-')
 
           # Make base name filename safe
-          base_name.gsub!(/^.*(\\|\/)/, '')
+          base_name.gsub!(%r{^.*(\\|/)}, '')
           base_name.gsub!(/[^0-9A-Za-z.\-]+/, '_')
 
           return base_name
