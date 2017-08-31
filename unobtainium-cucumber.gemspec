@@ -11,9 +11,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'unobtainium-cucumber/version'
 
-# rubocop:disable Style/UnneededPercentQ, Style/ExtraSpacing
-# rubocop:disable Style/SpaceAroundOperators
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable Style/UnneededPercentQ, Layout/ExtraSpacing
+# rubocop:disable Layout/SpaceAroundOperators
 Gem::Specification.new do |spec|
   spec.name          = "unobtainium-cucumber"
   spec.version       = Unobtainium::Cucumber::VERSION
@@ -36,22 +35,21 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.2'
 
-  spec.add_development_dependency "bundler", "~> 1.13"
-  spec.add_development_dependency "rubocop", "~> 0.46"
+  spec.add_development_dependency "bundler", "~> 1.15"
+  spec.add_development_dependency "rubocop", "~> 0.49"
   spec.add_development_dependency "rake", "~> 11.3"
-  spec.add_development_dependency "simplecov", "~> 0.12"
+  spec.add_development_dependency "simplecov", "~> 0.13"
   spec.add_development_dependency "yard", "~> 0.9"
   spec.add_development_dependency "appium_lib", ">= 9.1"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "chromedriver-helper"
   spec.add_development_dependency "phantomjs"
 
-  spec.add_dependency "unobtainium", "~> 0.11"
+  spec.add_dependency "unobtainium", "~> 0.12"
   spec.add_dependency "unobtainium-multifind", "~> 0.3"
   spec.add_dependency "unobtainium-multiwait", "~> 0.2"
   spec.add_dependency "cucumber", "~> 2.0"
-  spec.add_dependency "octiron", "~> 0.1"
+  spec.add_dependency "octiron", "~> 0.5"
 end
-# rubocop:enable Metrics/BlockLength
-# rubocop:enable Style/SpaceAroundOperators
-# rubocop:enable Style/UnneededPercentQ, Style/ExtraSpacing
+# rubocop:enable Layout/SpaceAroundOperators
+# rubocop:enable Style/UnneededPercentQ, Layout/ExtraSpacing
