@@ -45,11 +45,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "chromedriver-helper"
   spec.add_development_dependency "phantomjs"
 
-  spec.add_dependency "unobtainium", "~> 0.12"
-  spec.add_dependency "unobtainium-multifind", "~> 0.3"
-  spec.add_dependency "unobtainium-multiwait", "~> 0.2"
+  spec.add_dependency "unobtainium", "~> 0.13"
+  spec.add_dependency "unobtainium-multifind", "~> 0.4"
+  spec.add_dependency "unobtainium-multiwait", "~> 0.3"
   spec.add_dependency "cucumber", "~> 2.0"
-  spec.add_dependency "octiron", "~> 0.5"
+  spec.add_dependency "octiron", "~> 0.6"
 end
 # rubocop:enable Layout/SpaceAroundOperators
 # rubocop:enable Style/UnneededPercentQ, Layout/ExtraSpacing

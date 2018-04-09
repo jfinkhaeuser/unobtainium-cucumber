@@ -1,7 +1,3 @@
-# Rubocop
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new(:rubocop)
-
 # Cucumber
 require 'cucumber'
 require 'cucumber/rake/task'
@@ -21,7 +17,6 @@ end
 # Combined test task
 desc "Test all the things!"
 task :test do
-  Rake::Task[:rubocop].invoke
   Rake::Task[:cuke].invoke
 end
 
