@@ -12,8 +12,6 @@ Of course, each of these can be configured.
 
 [![Gem Version](https://badge.fury.io/rb/unobtainium-cucumber.svg)](https://badge.fury.io/rb/unobtainium-cucumber)
 [![Build status](https://travis-ci.org/jfinkhaeuser/unobtainium-cucumber.svg?branch=master)](https://travis-ci.org/jfinkhaeuser/unobtainium-cucumber)
-[![Code Climate](https://codeclimate.com/github/jfinkhaeuser/unobtainium-cucumber/badges/gpa.svg)](https://codeclimate.com/github/jfinkhaeuser/unobtainium-cucumber)
-[![Test Coverage](https://codeclimate.com/github/jfinkhaeuser/unobtainium-cucumber/badges/coverage.svg)](https://codeclimate.com/github/jfinkhaeuser/unobtainium-cucumber/coverage)
 
 # Usage
 
